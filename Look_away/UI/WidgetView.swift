@@ -6,6 +6,7 @@ struct WidgetView: View {
     let edge: ScreenEdge
     let isAnnouncing: Bool
     let message: String
+    @ObservedObject var settings: AppSettings
     @ObservedObject var lookController: EyeLookController
     var onDismiss: () -> Void
     var onDragBegan: () -> Void = {}
@@ -30,10 +31,20 @@ struct WidgetView: View {
         }
     }
 
+    @ViewBuilder
     private var blob: some View {
-        Circle()
+        switch settings.widgetShape {
+        case .circle:
+            blobContent(shape: Circle())
+        case .rectangle:
+            blobContent(shape: RoundedRectangle(cornerRadius: 14))
+        }
+    }
+
+    private func blobContent(shape: some Shape) -> some View {
+        shape
             .fill(
-                LinearGradient(colors: [.purple, .indigo], startPoint: .topLeading, endPoint: .bottomTrailing)
+                LinearGradient(colors: settings.widgetColor.gradientColors, startPoint: .topLeading, endPoint: .bottomTrailing)
             )
             .frame(width: blobSize, height: blobSize)
             .overlay(EyesView(isAlert: isAnnouncing, lookController: lookController))
@@ -42,7 +53,7 @@ struct WidgetView: View {
     }
 
     private var bubble: some View {
-        SpeechBubbleView(text: message, onDismiss: onDismiss)
+        SpeechBubbleView(text: message, color: settings.widgetColor, onDismiss: onDismiss)
             .transition(.scale.combined(with: .opacity))
             .gesture(
                 DragGesture(minimumDistance: 8)
@@ -56,6 +67,6 @@ struct WidgetView: View {
 }
 
 #Preview {
-    WidgetView(edge: .right, isAnnouncing: true, message: SpeechBubbleView.messages[0], lookController: EyeLookController(), onDismiss: {})
+    WidgetView(edge: .right, isAnnouncing: true, message: SpeechBubbleView.messages[0], settings: AppSettings(), lookController: EyeLookController(), onDismiss: {})
         .padding()
 }

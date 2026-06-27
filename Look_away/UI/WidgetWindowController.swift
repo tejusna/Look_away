@@ -59,7 +59,7 @@ final class WidgetWindowController {
         panel.hidesOnDeactivate = false
 
         hostingView = NSHostingView(rootView: WidgetView(
-            edge: settings.widgetPosition.edge, isAnnouncing: false, message: "", lookController: eyeLook, onDismiss: {}
+            edge: settings.widgetPosition.edge, isAnnouncing: false, message: "", settings: settings, lookController: eyeLook, onDismiss: {}
         ))
         panel.contentView = hostingView
         // Stays fully off-screen until something shows it; nothing to see, nothing clickable.
@@ -74,6 +74,7 @@ final class WidgetWindowController {
 
     /// Shows a recurring reminder. `onFinished` restarts the interval timer.
     func announceReminder(message: String, onFinished: @escaping () -> Void) {
+        playWhooshIfEnabled()
         announce(message: message, onFinished: onFinished)
     }
 
@@ -177,6 +178,13 @@ final class WidgetWindowController {
         }
     }
 
+    private func playWhooshIfEnabled() {
+        guard settings.soundEnabled else { return }
+        let sound = NSSound(named: "Blow")
+        sound?.volume = 0.4
+        sound?.play()
+    }
+
     private func slideIn(to frame: NSRect) {
         panel.alphaValue = 0
         panel.setFrame(hiddenStartFrame(for: frame), display: false)
@@ -217,6 +225,7 @@ final class WidgetWindowController {
             edge: settings.widgetPosition.edge,
             isAnnouncing: isAnnouncing,
             message: message,
+            settings: settings,
             lookController: eyeLook,
             onDismiss: { [weak self] in self?.handleManualDismiss() },
             onDragBegan: { [weak self] in self?.handleDragBegan() },

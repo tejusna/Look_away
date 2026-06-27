@@ -9,6 +9,9 @@ final class AppSettings: ObservableObject {
         static let isPaused = "isPaused"
         static let launchPromptCount = "launchPromptCount"
         static let launchAtLoginEnabled = "launchAtLoginEnabled"
+        static let widgetShape = "widgetShape"
+        static let widgetColor = "widgetColor"
+        static let soundEnabled = "soundEnabled"
     }
 
     private let defaults: UserDefaults
@@ -31,6 +34,18 @@ final class AppSettings: ObservableObject {
 
     @Published var launchAtLoginEnabled: Bool {
         didSet { defaults.set(launchAtLoginEnabled, forKey: Key.launchAtLoginEnabled) }
+    }
+
+    @Published var widgetShape: WidgetShape {
+        didSet { defaults.set(widgetShape.rawValue, forKey: Key.widgetShape) }
+    }
+
+    @Published var widgetColor: WidgetColorOption {
+        didSet { defaults.set(widgetColor.rawValue, forKey: Key.widgetColor) }
+    }
+
+    @Published var soundEnabled: Bool {
+        didSet { defaults.set(soundEnabled, forKey: Key.soundEnabled) }
     }
 
     /// Number of times we've shown (or considered showing) the launch-at-login prompt.
@@ -58,5 +73,25 @@ final class AppSettings: ObservableObject {
 
         isPaused = defaults.bool(forKey: Key.isPaused)
         launchAtLoginEnabled = defaults.bool(forKey: Key.launchAtLoginEnabled)
+
+        if let rawShape = defaults.string(forKey: Key.widgetShape),
+           let stored = WidgetShape(rawValue: rawShape) {
+            widgetShape = stored
+        } else {
+            widgetShape = .default
+        }
+
+        if let rawColor = defaults.string(forKey: Key.widgetColor),
+           let stored = WidgetColorOption(rawValue: rawColor) {
+            widgetColor = stored
+        } else {
+            widgetColor = .default
+        }
+
+        if let stored = defaults.object(forKey: Key.soundEnabled) as? Bool {
+            soundEnabled = stored
+        } else {
+            soundEnabled = true
+        }
     }
 }

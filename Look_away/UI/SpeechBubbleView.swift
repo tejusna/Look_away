@@ -8,6 +8,7 @@ struct SpeechBubbleView: View {
     ]
 
     let text: String
+    var color: WidgetColorOption = .default
     var onDismiss: () -> Void
 
     var body: some View {
@@ -19,7 +20,7 @@ struct SpeechBubbleView: View {
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.purple)
+                    .fill(color.bubbleColor)
             )
             .fixedSize()
             .onTapGesture { onDismiss() }
@@ -27,6 +28,6 @@ struct SpeechBubbleView: View {
 }
 
 #Preview {
-    SpeechBubbleView(text: SpeechBubbleView.messages[0], onDismiss: {})
+    SpeechBubbleView(text: SpeechBubbleView.messages[0], color: .red, onDismiss: {})
         .padding()
 }

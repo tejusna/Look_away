@@ -12,6 +12,9 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private var pauseResumeItem: NSMenuItem!
     private var intervalItems: [Int: NSMenuItem] = [:]
     private var launchAtLoginItem: NSMenuItem!
+    private var soundEnabledItem: NSMenuItem!
+    private var shapeItems: [WidgetShape: NSMenuItem] = [:]
+    private var colorItems: [WidgetColorOption: NSMenuItem] = [:]
 
     init(settings: AppSettings, reminderManager: ReminderManager, launchAtLogin: LaunchAtLoginManager, widgetWindowController: WidgetWindowController) {
         self.settings = settings
@@ -65,6 +68,38 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         intervalParent.submenu = intervalMenu
         menu.addItem(intervalParent)
 
+        let shapeMenu = NSMenu()
+        for shape in WidgetShape.allCases {
+            let item = NSMenuItem(title: shape.title, action: #selector(selectShape(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = shape
+            item.state = (shape == settings.widgetShape) ? .on : .off
+            shapeItems[shape] = item
+            shapeMenu.addItem(item)
+        }
+        let shapeParent = NSMenuItem(title: "Shape", action: nil, keyEquivalent: "")
+        shapeParent.submenu = shapeMenu
+        menu.addItem(shapeParent)
+
+        let colorMenu = NSMenu()
+        for color in WidgetColorOption.allCases {
+            let item = NSMenuItem(title: color.title, action: #selector(selectColor(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = color
+            item.image = swatchImage(for: color.swatch)
+            item.state = (color == settings.widgetColor) ? .on : .off
+            colorItems[color] = item
+            colorMenu.addItem(item)
+        }
+        let colorParent = NSMenuItem(title: "Color", action: nil, keyEquivalent: "")
+        colorParent.submenu = colorMenu
+        menu.addItem(colorParent)
+
+        soundEnabledItem = NSMenuItem(title: "Reminder Sound", action: #selector(toggleSound), keyEquivalent: "")
+        soundEnabledItem.target = self
+        soundEnabledItem.state = settings.soundEnabled ? .on : .off
+        menu.addItem(soundEnabledItem)
+
         launchAtLoginItem = NSMenuItem(title: "Launch at Login", action: #selector(toggleLaunchAtLogin), keyEquivalent: "")
         launchAtLoginItem.target = self
         launchAtLoginItem.state = settings.launchAtLoginEnabled ? .on : .off
@@ -95,6 +130,39 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         settings.$launchAtLoginEnabled
             .sink { [weak self] enabled in self?.launchAtLoginItem?.state = enabled ? .on : .off }
             .store(in: &cancellables)
+
+        settings.$soundEnabled
+            .sink { [weak self] enabled in self?.soundEnabledItem?.state = enabled ? .on : .off }
+            .store(in: &cancellables)
+
+        settings.$widgetShape
+            .sink { [weak self] shape in
+                guard let self else { return }
+                for (candidate, item) in self.shapeItems {
+                    item.state = (candidate == shape) ? .on : .off
+                }
+            }
+            .store(in: &cancellables)
+
+        settings.$widgetColor
+            .sink { [weak self] color in
+                guard let self else { return }
+                for (candidate, item) in self.colorItems {
+                    item.state = (candidate == color) ? .on : .off
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    private func swatchImage(for color: NSColor) -> NSImage {
+        let size = NSSize(width: 12, height: 12)
+        let image = NSImage(size: size)
+        image.lockFocus()
+        color.setFill()
+        NSBezierPath(ovalIn: NSRect(origin: .zero, size: size)).fill()
+        image.unlockFocus()
+        image.isTemplate = false
+        return image
     }
 
     @objc private func togglePause() {
@@ -116,5 +184,19 @@ final class StatusBarController: NSObject, NSMenuDelegate {
 
     @objc private func toggleLaunchAtLogin() {
         launchAtLogin.setEnabled(!settings.launchAtLoginEnabled)
+    }
+
+    @objc private func toggleSound() {
+        settings.soundEnabled.toggle()
+    }
+
+    @objc private func selectShape(_ sender: NSMenuItem) {
+        guard let shape = sender.representedObject as? WidgetShape else { return }
+        settings.widgetShape = shape
+    }
+
+    @objc private func selectColor(_ sender: NSMenuItem) {
+        guard let color = sender.representedObject as? WidgetColorOption else { return }
+        settings.widgetColor = color
     }
 }
