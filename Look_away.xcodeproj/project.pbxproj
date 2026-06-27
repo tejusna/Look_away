@@ -7,13 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00C7AF0A1B3F49E0AE677667 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E122CF63C8228B5253507B9 /* AppSettings.swift */; };
+		025BD0C09F892017B0905313 /* SpeechBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB413DD022C0FBCA6737FE1 /* SpeechBubbleView.swift */; };
+		02E848A4CBCC09B523E2F137 /* WidgetWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21F5FD05AA99EEB71B181D9 /* WidgetWindowController.swift */; };
+		53193F7C796C0DF7E47CDBE6 /* WindowDragHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3B070A56538C969DFEB3BD /* WindowDragHandle.swift */; };
+		5901B6D2B5C1EF69AC0E9985 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E137CA2D7612D4C1FB622926 /* StatusBarController.swift */; };
 		61DC49D22FF046960037B734 /* Look_awayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DC49D12FF046960037B734 /* Look_awayApp.swift */; };
-		61DC49D42FF046960037B734 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DC49D32FF046960037B734 /* ContentView.swift */; };
 		61DC49D62FF0469A0037B734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DC49D52FF0469A0037B734 /* Assets.xcassets */; };
 		61DC49D92FF0469A0037B734 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DC49D82FF0469A0037B734 /* Preview Assets.xcassets */; };
 		61DC49E42FF0469A0037B734 /* Look_awayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DC49E32FF0469A0037B734 /* Look_awayTests.swift */; };
 		61DC49EE2FF0469A0037B734 /* Look_awayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DC49ED2FF0469A0037B734 /* Look_awayUITests.swift */; };
 		61DC49F02FF0469A0037B734 /* Look_awayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DC49EF2FF0469A0037B734 /* Look_awayUITestsLaunchTests.swift */; };
+		6CA287EDE34A81A5085F2BCB /* ReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154DF5E5469B8F736AF388F4 /* ReminderManager.swift */; };
+		85DBB6FA9237C60597DFAEAE /* ReminderInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA3DDB616A1046EE66C073 /* ReminderInterval.swift */; };
+		86963C9D6302C69DBC18326C /* WidgetEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA3FAF8FCED16A59399FE1E /* WidgetEdge.swift */; };
+		9277CE583CB5F1AEE9706068 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76270ABE2536D1C61692597 /* WidgetView.swift */; };
+		C668732058B9F4BBFC760939 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F7B0C6B4B0BE439595FC3 /* AppDelegate.swift */; };
+		DBE0F1E50322F1C4FD2462DD /* LaunchAtLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2867F8FA581FC5F3A03FA4B /* LaunchAtLoginManager.swift */; };
+		DE83212C2BF3D13B61D0576B /* EyesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453A27837F4B69FA20280E /* EyesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +45,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		154DF5E5469B8F736AF388F4 /* ReminderManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReminderManager.swift; path = Managers/ReminderManager.swift; sourceTree = "<group>"; };
+		158F7B0C6B4B0BE439595FC3 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		15FA3DDB616A1046EE66C073 /* ReminderInterval.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReminderInterval.swift; path = Models/ReminderInterval.swift; sourceTree = "<group>"; };
+		3DA3FAF8FCED16A59399FE1E /* WidgetEdge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetEdge.swift; path = Models/WidgetEdge.swift; sourceTree = "<group>"; };
+		3E3B070A56538C969DFEB3BD /* WindowDragHandle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WindowDragHandle.swift; path = UI/WindowDragHandle.swift; sourceTree = "<group>"; };
 		61DC49CE2FF046960037B734 /* Look_away.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Look_away.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DC49D12FF046960037B734 /* Look_awayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Look_awayApp.swift; sourceTree = "<group>"; };
-		61DC49D32FF046960037B734 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		61DC49D52FF0469A0037B734 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61DC49D82FF0469A0037B734 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		61DC49DA2FF0469A0037B734 /* Look_away.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Look_away.entitlements; sourceTree = "<group>"; };
@@ -45,6 +60,13 @@
 		61DC49E92FF0469A0037B734 /* Look_awayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Look_awayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DC49ED2FF0469A0037B734 /* Look_awayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Look_awayUITests.swift; sourceTree = "<group>"; };
 		61DC49EF2FF0469A0037B734 /* Look_awayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Look_awayUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9E122CF63C8228B5253507B9 /* AppSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = Models/AppSettings.swift; sourceTree = "<group>"; };
+		B2867F8FA581FC5F3A03FA4B /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LaunchAtLoginManager.swift; path = Managers/LaunchAtLoginManager.swift; sourceTree = "<group>"; };
+		BAB413DD022C0FBCA6737FE1 /* SpeechBubbleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpeechBubbleView.swift; path = UI/SpeechBubbleView.swift; sourceTree = "<group>"; };
+		E137CA2D7612D4C1FB622926 /* StatusBarController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StatusBarController.swift; path = UI/StatusBarController.swift; sourceTree = "<group>"; };
+		E1453A27837F4B69FA20280E /* EyesView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EyesView.swift; path = UI/EyesView.swift; sourceTree = "<group>"; };
+		E21F5FD05AA99EEB71B181D9 /* WidgetWindowController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetWindowController.swift; path = UI/WidgetWindowController.swift; sourceTree = "<group>"; };
+		E76270ABE2536D1C61692597 /* WidgetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetView.swift; path = UI/WidgetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +94,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0138A83C25C92BDFE2F132D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				15FA3DDB616A1046EE66C073 /* ReminderInterval.swift */,
+				3DA3FAF8FCED16A59399FE1E /* WidgetEdge.swift */,
+				9E122CF63C8228B5253507B9 /* AppSettings.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		36C760A170FCD94034AF9EBC /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E1453A27837F4B69FA20280E /* EyesView.swift */,
+				BAB413DD022C0FBCA6737FE1 /* SpeechBubbleView.swift */,
+				E76270ABE2536D1C61692597 /* WidgetView.swift */,
+				E21F5FD05AA99EEB71B181D9 /* WidgetWindowController.swift */,
+				E137CA2D7612D4C1FB622926 /* StatusBarController.swift */,
+				3E3B070A56538C969DFEB3BD /* WindowDragHandle.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		61DC49C52FF046960037B734 = {
 			isa = PBXGroup;
 			children = (
@@ -96,10 +141,13 @@
 			isa = PBXGroup;
 			children = (
 				61DC49D12FF046960037B734 /* Look_awayApp.swift */,
-				61DC49D32FF046960037B734 /* ContentView.swift */,
 				61DC49D52FF0469A0037B734 /* Assets.xcassets */,
 				61DC49DA2FF0469A0037B734 /* Look_away.entitlements */,
 				61DC49D72FF0469A0037B734 /* Preview Content */,
+				158F7B0C6B4B0BE439595FC3 /* AppDelegate.swift */,
+				0138A83C25C92BDFE2F132D9 /* Models */,
+				A58D2CCB57EA449A64A4BEF1 /* Managers */,
+				36C760A170FCD94034AF9EBC /* UI */,
 			);
 			path = Look_away;
 			sourceTree = "<group>";
@@ -127,6 +175,15 @@
 				61DC49EF2FF0469A0037B734 /* Look_awayUITestsLaunchTests.swift */,
 			);
 			path = Look_awayUITests;
+			sourceTree = "<group>";
+		};
+		A58D2CCB57EA449A64A4BEF1 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				154DF5E5469B8F736AF388F4 /* ReminderManager.swift */,
+				B2867F8FA581FC5F3A03FA4B /* LaunchAtLoginManager.swift */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +316,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61DC49D42FF046960037B734 /* ContentView.swift in Sources */,
 				61DC49D22FF046960037B734 /* Look_awayApp.swift in Sources */,
+				C668732058B9F4BBFC760939 /* AppDelegate.swift in Sources */,
+				85DBB6FA9237C60597DFAEAE /* ReminderInterval.swift in Sources */,
+				86963C9D6302C69DBC18326C /* WidgetEdge.swift in Sources */,
+				00C7AF0A1B3F49E0AE677667 /* AppSettings.swift in Sources */,
+				6CA287EDE34A81A5085F2BCB /* ReminderManager.swift in Sources */,
+				DBE0F1E50322F1C4FD2462DD /* LaunchAtLoginManager.swift in Sources */,
+				DE83212C2BF3D13B61D0576B /* EyesView.swift in Sources */,
+				025BD0C09F892017B0905313 /* SpeechBubbleView.swift in Sources */,
+				9277CE583CB5F1AEE9706068 /* WidgetView.swift in Sources */,
+				02E848A4CBCC09B523E2F137 /* WidgetWindowController.swift in Sources */,
+				5901B6D2B5C1EF69AC0E9985 /* StatusBarController.swift in Sources */,
+				53193F7C796C0DF7E47CDBE6 /* WindowDragHandle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +497,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -456,6 +525,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
