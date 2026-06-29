@@ -1,8 +1,6 @@
 import Foundation
 
 enum ReminderInterval: Int, CaseIterable, Codable {
-    // TODO(testing): remove `.one` and switch default back to `.twenty` before shipping.
-    case one = 1
     case twenty = 20
     case thirty = 30
     case fortyFive = 45
@@ -14,5 +12,5 @@ enum ReminderInterval: Int, CaseIterable, Codable {
 
     var title: String { "\(rawValue) min" }
 
-    static var `default`: ReminderInterval { .one }
+    static var `default`: ReminderInterval { .twenty }
 }

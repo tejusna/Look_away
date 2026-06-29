@@ -33,6 +33,7 @@ final class PetCustomizeView: NSView {
         let petRow = makeRow(WidgetPet.allCases.map { pet in
             let button = makeButton(action: #selector(selectPet(_:)), cornerRadius: 10)
             button.toolTip = pet.title
+            button.image = petThumbnail(pet)
             petButtons[pet] = button
             return labeled(button, name: pet.title)
         })
@@ -115,9 +116,9 @@ final class PetCustomizeView: NSView {
     }
 
     private func refresh() {
-        let colors = settings.widgetColor.gradientColors
+        // Pet thumbnails are static (#2D2D2D), set once in build(); only their selection
+        // ring changes here.
         for (pet, button) in petButtons {
-            button.image = petThumbnail(pet, colors: colors)
             button.layer?.borderWidth = (pet == settings.widgetPet) ? 2.5 : 0
             button.layer?.borderColor = NSColor.controlAccentColor.cgColor
         }
@@ -148,21 +149,20 @@ final class PetCustomizeView: NSView {
 
     // MARK: - Thumbnails
 
-    private func petThumbnail(_ pet: WidgetPet, colors: [Color]) -> NSImage {
-        let gradient = LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+    private func petThumbnail(_ pet: WidgetPet) -> NSImage {
+        let color = Color(hex: 0x2D2D2D)
         let shape: AnyView
         switch pet {
-        case .bouncy: shape = AnyView(Circle().fill(gradient))
-        case .boxy: shape = AnyView(RoundedRectangle(cornerRadius: 8).fill(gradient))
-        case .flower: shape = AnyView(FlowerShape().fill(gradient))
-        case .cat: shape = AnyView(CatShape().fill(gradient))
+        case .bouncy: shape = AnyView(Circle().fill(color))
+        case .boxy: shape = AnyView(RoundedRectangle(cornerRadius: 8).fill(color))
+        case .flower: shape = AnyView(FlowerShape().fill(color))
+        case .cat: shape = AnyView(CatShape().fill(color))
         }
         return render(shape.frame(width: thumb, height: thumb))
     }
 
     private func swatchImage(for color: WidgetColorOption) -> NSImage {
-        let gradient = LinearGradient(colors: color.gradientColors, startPoint: .topLeading, endPoint: .bottomTrailing)
-        return render(Circle().fill(gradient).frame(width: thumb, height: thumb))
+        return render(Circle().fill(color.color).frame(width: thumb, height: thumb))
     }
 
     private func specsImage() -> NSImage {

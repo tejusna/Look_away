@@ -59,12 +59,10 @@ struct WidgetView: View {
 
     private func blobContent(shape: some Shape, eyesYOffset: CGFloat = 0, eyesScale: CGFloat = 1) -> some View {
         shape
-            .fill(
-                LinearGradient(colors: settings.widgetColor.gradientColors, startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
+            .fill(settings.widgetColor.color)
             .frame(width: blobSize, height: blobSize)
             .overlay(EyesView(isAlert: isAnnouncing, scale: eyesScale, showSpecs: settings.specsEnabled, lookController: lookController).offset(y: eyesYOffset))
-            .shadow(color: .black.opacity(0.25), radius: 6, y: 2)
+            .shadow(color: .black.opacity(0.16), radius: 3, y: 1)
             // Center the shadowed pet in a larger cell so the shadow has room and isn't
             // clipped at the panel edge. Drag handle covers the whole cell.
             .frame(width: cellSize, height: cellSize)
