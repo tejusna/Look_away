@@ -37,6 +37,32 @@ struct FlowerShape: Shape {
     }
 }
 
+/// A pair of round spectacles (two lens rings + a bridge), traced from specs.svg.
+///
+/// Authored in a 292x143 box with the SVG's transforms baked in: two lenses at
+/// (71.348, 71.347) and (220.348, 71.347), radius 68.223, joined by a short bridge.
+/// Meant to be *stroked* (not filled) and overlaid centered on the two eyes — the
+/// lens centers are spaced to land over the eye centers.
+struct SpecsShape: Shape {
+    static let referenceSize = CGSize(width: 292, height: 143)
+    /// Fraction of the reference width between the two lens centers (used to align to eyes).
+    static let lensSpacingFraction: CGFloat = (220.348 - 71.348) / 292
+
+    func path(in rect: CGRect) -> Path {
+        let r: CGFloat = 68.223
+        var path = Path()
+        path.addEllipse(in: CGRect(x: 71.348 - r, y: 71.347 - r, width: r * 2, height: r * 2))
+        path.addEllipse(in: CGRect(x: 220.348 - r, y: 71.347 - r, width: r * 2, height: r * 2))
+        path.move(to: CGPoint(x: 140.125, y: 73.125))
+        path.addLine(to: CGPoint(x: 152.125, y: 73.125))
+
+        let scale = min(rect.width / Self.referenceSize.width, rect.height / Self.referenceSize.height)
+        let dx = rect.minX + (rect.width - Self.referenceSize.width * scale) / 2
+        let dy = rect.minY + (rect.height - Self.referenceSize.height * scale) / 2
+        return path.applying(CGAffineTransform(a: scale, b: 0, c: 0, d: scale, tx: dx, ty: dy))
+    }
+}
+
 /// A cat head with two pointed ears, traced from cat.svg.
 ///
 /// Authored in a 324x295 box (the two nested translate transforms, dx=-312

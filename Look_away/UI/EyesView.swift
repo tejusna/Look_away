@@ -13,6 +13,8 @@ struct EyesView: View {
     var isAlert: Bool
     /// Per-pet size factor for the eyes and the gap between them (1 = default).
     var scale: CGFloat = 1
+    /// Draw a pair of spectacles over the eyes.
+    var showSpecs: Bool = false
     @ObservedObject var lookController: EyeLookController
 
     @State private var isBlinking = false
@@ -29,8 +31,24 @@ struct EyesView: View {
             eye
             eye
         }
+        .overlay(specsOverlay)
         .onAppear { startBlinkLoop(); startLookLoop() }
         .onDisappear { blinkTask?.cancel(); lookTask?.cancel() }
+    }
+
+    /// Oversized glasses. The eye-aligned baseline width spaces the lenses exactly over the
+    /// two eye centers (24*scale apart); `oversize` then enlarges the whole frame, so the
+    /// lenses grow and spread for a chunky, oversized look while staying centered on the eyes.
+    @ViewBuilder
+    private var specsOverlay: some View {
+        if showSpecs {
+            let oversize: CGFloat = 1.45
+            let width = (24 * scale / SpecsShape.lensSpacingFraction) * oversize
+            let height = width * SpecsShape.referenceSize.height / SpecsShape.referenceSize.width
+            SpecsShape()
+                .stroke(Color.black.opacity(0.85), style: StrokeStyle(lineWidth: 1.9 * scale, lineCap: .round, lineJoin: .round))
+                .frame(width: width, height: height)
+        }
     }
 
     private var eye: some View {

@@ -6,7 +6,15 @@ import Foundation
 enum WidgetPet: String, CaseIterable, Codable {
     case bouncy, boxy, flower, cat
 
-    var title: String { rawValue.capitalized }
+    /// Display name (raw values stay bouncy/boxy/flower/cat so stored prefs don't break).
+    var title: String {
+        switch self {
+        case .bouncy: return "Bouncy"
+        case .boxy: return "Boxy"
+        case .flower: return "Bloom"
+        case .cat: return "Meow"
+        }
+    }
 
     /// Personality-flavored reminder messages, shown at random when this pet announces.
     var messages: [String] {

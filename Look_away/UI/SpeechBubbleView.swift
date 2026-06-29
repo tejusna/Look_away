@@ -8,7 +8,6 @@ struct SpeechBubbleView: View {
     ]
 
     let text: String
-    var color: WidgetColorOption = .default
     var onDismiss: () -> Void
 
     /// Must stay <= the bubble width `WidgetWindowController` budgets into the panel
@@ -19,15 +18,20 @@ struct SpeechBubbleView: View {
 
     var body: some View {
         Text(text)
-            .font(.system(size: 12, weight: .medium))
+            .font(.system(size: 12, weight: .semibold))
             .multilineTextAlignment(.center)
-            .foregroundStyle(.white)
+            .foregroundStyle(.black)
             .frame(maxWidth: maxTextWidth)
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(color.bubbleColor)
+                    .fill(.white)
+                    .shadow(color: .black.opacity(0.22), radius: 7, x: 0, y: 3)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .strokeBorder(.black.opacity(0.08), lineWidth: 1)
             )
             .fixedSize(horizontal: false, vertical: true)
             .onTapGesture { onDismiss() }
@@ -35,6 +39,6 @@ struct SpeechBubbleView: View {
 }
 
 #Preview {
-    SpeechBubbleView(text: SpeechBubbleView.messages[0], color: .red, onDismiss: {})
+    SpeechBubbleView(text: SpeechBubbleView.messages[0], onDismiss: {})
         .padding()
 }

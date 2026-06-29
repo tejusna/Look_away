@@ -39,7 +39,7 @@ final class WidgetWindowController {
     private let shadowPadding: CGFloat = 6
     private var cellSize: CGFloat { blobSize + shadowPadding * 2 }
     private let margin: CGFloat = 12
-    private let bubbleExtent: CGFloat = 170
+    private let bubbleExtent: CGFloat = 188
     private let announceDuration: TimeInterval = 10
     private let maxEyeOffset: CGFloat = 4
 

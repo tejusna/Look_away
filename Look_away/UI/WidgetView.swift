@@ -22,6 +22,13 @@ struct WidgetView: View {
     private var cellSize: CGFloat { blobSize + shadowPadding * 2 }
 
     var body: some View {
+        // Anchor to the docked edge so the pet stays flush against the screen edge and the
+        // panel's spare width falls on the bubble's outer side — room for the bubble shadow.
+        content.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: edge == .left ? .leading : .trailing)
+    }
+
+    @ViewBuilder
+    private var content: some View {
         switch edge {
         case .left:
             HStack(spacing: 10) {
@@ -56,7 +63,7 @@ struct WidgetView: View {
                 LinearGradient(colors: settings.widgetColor.gradientColors, startPoint: .topLeading, endPoint: .bottomTrailing)
             )
             .frame(width: blobSize, height: blobSize)
-            .overlay(EyesView(isAlert: isAnnouncing, scale: eyesScale, lookController: lookController).offset(y: eyesYOffset))
+            .overlay(EyesView(isAlert: isAnnouncing, scale: eyesScale, showSpecs: settings.specsEnabled, lookController: lookController).offset(y: eyesYOffset))
             .shadow(color: .black.opacity(0.25), radius: 6, y: 2)
             // Center the shadowed pet in a larger cell so the shadow has room and isn't
             // clipped at the panel edge. Drag handle covers the whole cell.
@@ -65,7 +72,7 @@ struct WidgetView: View {
     }
 
     private var bubble: some View {
-        SpeechBubbleView(text: message, color: settings.widgetColor, onDismiss: onDismiss)
+        SpeechBubbleView(text: message, onDismiss: onDismiss)
             .transition(.scale.combined(with: .opacity))
             .gesture(
                 DragGesture(minimumDistance: 8)

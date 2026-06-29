@@ -12,6 +12,7 @@ final class AppSettings: ObservableObject {
         static let widgetPet = "widgetPet"
         static let widgetColor = "widgetColor"
         static let soundEnabled = "soundEnabled"
+        static let specsEnabled = "specsEnabled"
     }
 
     private let defaults: UserDefaults
@@ -46,6 +47,10 @@ final class AppSettings: ObservableObject {
 
     @Published var soundEnabled: Bool {
         didSet { defaults.set(soundEnabled, forKey: Key.soundEnabled) }
+    }
+
+    @Published var specsEnabled: Bool {
+        didSet { defaults.set(specsEnabled, forKey: Key.specsEnabled) }
     }
 
     /// Number of times we've shown (or considered showing) the launch-at-login prompt.
@@ -93,5 +98,7 @@ final class AppSettings: ObservableObject {
         } else {
             soundEnabled = true
         }
+
+        specsEnabled = defaults.bool(forKey: Key.specsEnabled)
     }
 }
