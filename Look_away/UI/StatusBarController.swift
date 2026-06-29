@@ -13,7 +13,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private var intervalItems: [Int: NSMenuItem] = [:]
     private var launchAtLoginItem: NSMenuItem!
     private var soundEnabledItem: NSMenuItem!
-    private var shapeItems: [WidgetShape: NSMenuItem] = [:]
+    private var petItems: [WidgetPet: NSMenuItem] = [:]
     private var colorItems: [WidgetColorOption: NSMenuItem] = [:]
 
     init(settings: AppSettings, reminderManager: ReminderManager, launchAtLogin: LaunchAtLoginManager, widgetWindowController: WidgetWindowController) {
@@ -68,18 +68,18 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         intervalParent.submenu = intervalMenu
         menu.addItem(intervalParent)
 
-        let shapeMenu = NSMenu()
-        for shape in WidgetShape.allCases {
-            let item = NSMenuItem(title: shape.title, action: #selector(selectShape(_:)), keyEquivalent: "")
+        let petMenu = NSMenu()
+        for pet in WidgetPet.allCases {
+            let item = NSMenuItem(title: pet.title, action: #selector(selectPet(_:)), keyEquivalent: "")
             item.target = self
-            item.representedObject = shape
-            item.state = (shape == settings.widgetShape) ? .on : .off
-            shapeItems[shape] = item
-            shapeMenu.addItem(item)
+            item.representedObject = pet
+            item.state = (pet == settings.widgetPet) ? .on : .off
+            petItems[pet] = item
+            petMenu.addItem(item)
         }
-        let shapeParent = NSMenuItem(title: "Shape", action: nil, keyEquivalent: "")
-        shapeParent.submenu = shapeMenu
-        menu.addItem(shapeParent)
+        let petParent = NSMenuItem(title: "Pets", action: nil, keyEquivalent: "")
+        petParent.submenu = petMenu
+        menu.addItem(petParent)
 
         let colorMenu = NSMenu()
         for color in WidgetColorOption.allCases {
@@ -135,11 +135,11 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             .sink { [weak self] enabled in self?.soundEnabledItem?.state = enabled ? .on : .off }
             .store(in: &cancellables)
 
-        settings.$widgetShape
-            .sink { [weak self] shape in
+        settings.$widgetPet
+            .sink { [weak self] pet in
                 guard let self else { return }
-                for (candidate, item) in self.shapeItems {
-                    item.state = (candidate == shape) ? .on : .off
+                for (candidate, item) in self.petItems {
+                    item.state = (candidate == pet) ? .on : .off
                 }
             }
             .store(in: &cancellables)
@@ -190,9 +190,9 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         settings.soundEnabled.toggle()
     }
 
-    @objc private func selectShape(_ sender: NSMenuItem) {
-        guard let shape = sender.representedObject as? WidgetShape else { return }
-        settings.widgetShape = shape
+    @objc private func selectPet(_ sender: NSMenuItem) {
+        guard let pet = sender.representedObject as? WidgetPet else { return }
+        settings.widgetPet = pet
     }
 
     @objc private func selectColor(_ sender: NSMenuItem) {

@@ -21,7 +21,8 @@
 		6CA287EDE34A81A5085F2BCB /* ReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154DF5E5469B8F736AF388F4 /* ReminderManager.swift */; };
 		85DBB6FA9237C60597DFAEAE /* ReminderInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA3DDB616A1046EE66C073 /* ReminderInterval.swift */; };
 		86963C9D6302C69DBC18326C /* WidgetEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA3FAF8FCED16A59399FE1E /* WidgetEdge.swift */; };
-		3EC9B771D22C468F89ED2D06 /* WidgetShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEACBC31FCA4D1E877ACE55 /* WidgetShape.swift */; };
+		3EC9B771D22C468F89ED2D06 /* WidgetPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEACBC31FCA4D1E877ACE55 /* WidgetPet.swift */; };
+		7B4A1C9E2E1A4F0DAEDC9B12 /* PetShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F47890ABCDEF1 /* PetShapes.swift */; };
 		C726223264FF4ACFA8142354 /* WidgetColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92753A783764BC3A1E440AC /* WidgetColorOption.swift */; };
 		9277CE583CB5F1AEE9706068 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76270ABE2536D1C61692597 /* WidgetView.swift */; };
 		C668732058B9F4BBFC760939 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F7B0C6B4B0BE439595FC3 /* AppDelegate.swift */; };
@@ -51,7 +52,8 @@
 		158F7B0C6B4B0BE439595FC3 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15FA3DDB616A1046EE66C073 /* ReminderInterval.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReminderInterval.swift; path = Models/ReminderInterval.swift; sourceTree = "<group>"; };
 		3DA3FAF8FCED16A59399FE1E /* WidgetEdge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetEdge.swift; path = Models/WidgetEdge.swift; sourceTree = "<group>"; };
-		9EEACBC31FCA4D1E877ACE55 /* WidgetShape.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetShape.swift; path = Models/WidgetShape.swift; sourceTree = "<group>"; };
+		9EEACBC31FCA4D1E877ACE55 /* WidgetPet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetPet.swift; path = Models/WidgetPet.swift; sourceTree = "<group>"; };
+		1A2B3C4D5E6F47890ABCDEF1 /* PetShapes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PetShapes.swift; path = UI/PetShapes.swift; sourceTree = "<group>"; };
 		A92753A783764BC3A1E440AC /* WidgetColorOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetColorOption.swift; path = Models/WidgetColorOption.swift; sourceTree = "<group>"; };
 		3E3B070A56538C969DFEB3BD /* WindowDragHandle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WindowDragHandle.swift; path = UI/WindowDragHandle.swift; sourceTree = "<group>"; };
 		61DC49CE2FF046960037B734 /* Look_away.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Look_away.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,7 +105,7 @@
 			children = (
 				15FA3DDB616A1046EE66C073 /* ReminderInterval.swift */,
 				3DA3FAF8FCED16A59399FE1E /* WidgetEdge.swift */,
-				9EEACBC31FCA4D1E877ACE55 /* WidgetShape.swift */,
+				9EEACBC31FCA4D1E877ACE55 /* WidgetPet.swift */,
 				A92753A783764BC3A1E440AC /* WidgetColorOption.swift */,
 				9E122CF63C8228B5253507B9 /* AppSettings.swift */,
 			);
@@ -119,6 +121,7 @@
 				E21F5FD05AA99EEB71B181D9 /* WidgetWindowController.swift */,
 				E137CA2D7612D4C1FB622926 /* StatusBarController.swift */,
 				3E3B070A56538C969DFEB3BD /* WindowDragHandle.swift */,
+				1A2B3C4D5E6F47890ABCDEF1 /* PetShapes.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -326,8 +329,9 @@
 				C668732058B9F4BBFC760939 /* AppDelegate.swift in Sources */,
 				85DBB6FA9237C60597DFAEAE /* ReminderInterval.swift in Sources */,
 				86963C9D6302C69DBC18326C /* WidgetEdge.swift in Sources */,
-				3EC9B771D22C468F89ED2D06 /* WidgetShape.swift in Sources */,
+				3EC9B771D22C468F89ED2D06 /* WidgetPet.swift in Sources */,
 				C726223264FF4ACFA8142354 /* WidgetColorOption.swift in Sources */,
+				7B4A1C9E2E1A4F0DAEDC9B12 /* PetShapes.swift in Sources */,
 				00C7AF0A1B3F49E0AE677667 /* AppSettings.swift in Sources */,
 				6CA287EDE34A81A5085F2BCB /* ReminderManager.swift in Sources */,
 				DBE0F1E50322F1C4FD2462DD /* LaunchAtLoginManager.swift in Sources */,

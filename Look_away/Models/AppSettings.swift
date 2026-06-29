@@ -9,7 +9,7 @@ final class AppSettings: ObservableObject {
         static let isPaused = "isPaused"
         static let launchPromptCount = "launchPromptCount"
         static let launchAtLoginEnabled = "launchAtLoginEnabled"
-        static let widgetShape = "widgetShape"
+        static let widgetPet = "widgetPet"
         static let widgetColor = "widgetColor"
         static let soundEnabled = "soundEnabled"
     }
@@ -36,8 +36,8 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(launchAtLoginEnabled, forKey: Key.launchAtLoginEnabled) }
     }
 
-    @Published var widgetShape: WidgetShape {
-        didSet { defaults.set(widgetShape.rawValue, forKey: Key.widgetShape) }
+    @Published var widgetPet: WidgetPet {
+        didSet { defaults.set(widgetPet.rawValue, forKey: Key.widgetPet) }
     }
 
     @Published var widgetColor: WidgetColorOption {
@@ -74,11 +74,11 @@ final class AppSettings: ObservableObject {
         isPaused = defaults.bool(forKey: Key.isPaused)
         launchAtLoginEnabled = defaults.bool(forKey: Key.launchAtLoginEnabled)
 
-        if let rawShape = defaults.string(forKey: Key.widgetShape),
-           let stored = WidgetShape(rawValue: rawShape) {
-            widgetShape = stored
+        if let rawPet = defaults.string(forKey: Key.widgetPet),
+           let stored = WidgetPet(rawValue: rawPet) {
+            widgetPet = stored
         } else {
-            widgetShape = .default
+            widgetPet = .default
         }
 
         if let rawColor = defaults.string(forKey: Key.widgetColor),

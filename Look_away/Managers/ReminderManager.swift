@@ -55,7 +55,8 @@ final class ReminderManager: ObservableObject {
     }
 
     private func triggerReminder() {
-        let message = SpeechBubbleView.messages.randomElement() ?? SpeechBubbleView.messages[0]
+        let messages = settings.widgetPet.messages
+        let message = messages.randomElement() ?? messages[0]
         onRemind?(message)
     }
 }

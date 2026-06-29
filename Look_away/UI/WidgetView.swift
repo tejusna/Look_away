@@ -33,21 +33,25 @@ struct WidgetView: View {
 
     @ViewBuilder
     private var blob: some View {
-        switch settings.widgetShape {
-        case .circle:
+        switch settings.widgetPet {
+        case .bouncy:
             blobContent(shape: Circle())
-        case .rectangle:
+        case .boxy:
             blobContent(shape: RoundedRectangle(cornerRadius: 14))
+        case .flower:
+            blobContent(shape: FlowerShape())
+        case .cat:
+            blobContent(shape: CatShape(), eyesYOffset: 6)
         }
     }
 
-    private func blobContent(shape: some Shape) -> some View {
+    private func blobContent(shape: some Shape, eyesYOffset: CGFloat = 0) -> some View {
         shape
             .fill(
                 LinearGradient(colors: settings.widgetColor.gradientColors, startPoint: .topLeading, endPoint: .bottomTrailing)
             )
             .frame(width: blobSize, height: blobSize)
-            .overlay(EyesView(isAlert: isAnnouncing, lookController: lookController))
+            .overlay(EyesView(isAlert: isAnnouncing, lookController: lookController).offset(y: eyesYOffset))
             .shadow(color: .black.opacity(0.25), radius: 6, y: 2)
             .overlay(WindowDragHandle(onBegan: onDragBegan, onChanged: onDragChanged, onEnded: onDragEnded))
     }

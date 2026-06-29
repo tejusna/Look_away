@@ -7,6 +7,20 @@ private enum WidgetPhase: Equatable {
     case announcing(String)
 }
 
+/// Borderless panel that allows fully free programmatic positioning.
+///
+/// `NSWindow`'s default `constrainFrameRect(_:to:)` keeps a window's top edge below the
+/// menu bar and otherwise on-screen. That silently clamps the panel every time we move it
+/// via `setFrameOrigin` during a drag, so the widget can't be dragged up near the top of
+/// the screen ("won't go up past a certain level") and lands at the wrong height on release
+/// ("doesn't stick where I dropped it"). We manage on-screen clamping ourselves in
+/// `visibleFrame()`, so this override opts out of AppKit's.
+private final class WidgetPanel: NSPanel {
+    override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect {
+        frameRect
+    }
+}
+
 /// Hosts the widget in a borderless, non-activating floating NSPanel.
 ///
 /// Idle state is fully hidden (`orderOut`, zero footprint, not just a tiny sliver).
@@ -14,7 +28,7 @@ private enum WidgetPhase: Equatable {
 /// reminder/intro message with a speech bubble. Dragging repositions it along the
 /// left or right screen edge only.
 final class WidgetWindowController {
-    private let panel: NSPanel
+    private let panel: WidgetPanel
     private let hostingView: NSHostingView<WidgetView>
     private let settings: AppSettings
     private let eyeLook = EyeLookController()
@@ -31,6 +45,7 @@ final class WidgetWindowController {
     private var announceTimer: Timer?
     private var retreatTimer: Timer?
     private var cursorTimer: Timer?
+    private var keepOnTopTimer: Timer?
 
     private var dragStartMouseLocation: NSPoint?
     private var dragStartOrigin: NSPoint?
@@ -43,7 +58,7 @@ final class WidgetWindowController {
         self.settings = settings
         self.currentScreen = NSScreen.main ?? NSScreen.screens[0]
 
-        panel = NSPanel(
+        panel = WidgetPanel(
             contentRect: NSRect(x: 0, y: 0, width: blobSize, height: blobSize),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
@@ -86,13 +101,20 @@ final class WidgetWindowController {
         phase = .peeking
         rebuildContent()
         slideIn(to: visibleFrame())
+        startKeepOnTop()
     }
 
     /// Hides the peek a short while after the menu closes, unless a drag is in progress.
+    ///
+    /// Only retreats if we're still just peeking by the time the timer fires: if an
+    /// announce started in the meantime (e.g. "Remind Me Now" clicked while the menu's
+    /// peek animation was still running), this must not cut that announcement short —
+    /// otherwise the slide-in can get reversed mid-flight and the pet never fully appears.
     func scheduleRetreat(after delay: TimeInterval) {
         retreatTimer?.invalidate()
         retreatTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
-            self?.retreat()
+            guard let self, case .peeking = self.phase else { return }
+            self.retreat()
         }
     }
 
@@ -108,6 +130,7 @@ final class WidgetWindowController {
         rebuildContent()
         slideIn(to: visibleFrame())
         startEyeTracking()
+        startKeepOnTop()
 
         announceTimer = Timer.scheduledTimer(withTimeInterval: announceDuration, repeats: false) { [weak self] _ in
             self?.finishAnnounce()
@@ -132,6 +155,7 @@ final class WidgetWindowController {
         let myTransitionID = transitionID
         phase = .hidden
         stopEyeTracking()
+        stopKeepOnTop()
         slideOut { [weak self] in
             // Only order out if nothing newer (e.g. a fast re-click reopening the menu) took over.
             if self?.transitionID == myTransitionID {
@@ -139,6 +163,25 @@ final class WidgetWindowController {
             }
             completion?()
         }
+    }
+
+    // MARK: - Staying on top
+
+    /// Re-asserts front ordering on a timer while visible. Same-level windows (.floating)
+    /// are ordered by whoever last called "order front" system-wide, not per-app, so another
+    /// app's own floating overlay (Zoom, screen recorders, menu-bar widgets) can silently win
+    /// that race well after we first appeared. Re-ordering periodically — rather than bumping
+    /// our window level — wins it back without touching geometry, which broke dragging.
+    private func startKeepOnTop() {
+        keepOnTopTimer?.invalidate()
+        keepOnTopTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.panel.orderFrontRegardless()
+        }
+    }
+
+    private func stopKeepOnTop() {
+        keepOnTopTimer?.invalidate()
+        keepOnTopTimer = nil
     }
 
     // MARK: - Cursor-following eyes
@@ -250,6 +293,7 @@ final class WidgetWindowController {
     private func handleDragBegan() {
         retreatTimer?.invalidate()
         announceTimer?.invalidate()
+        keepOnTopTimer?.invalidate()
         dragStartMouseLocation = NSEvent.mouseLocation
         dragStartOrigin = panel.frame.origin
     }
@@ -287,6 +331,7 @@ final class WidgetWindowController {
         settings.widgetPosition = WidgetPosition(edge: edge, fraction: fraction)
         rebuildContent()
         animate(to: visibleFrame())
+        startKeepOnTop()
 
         // Resume the 20s countdown from where dragging paused it, or schedule the peek to retreat.
         switch phase {
