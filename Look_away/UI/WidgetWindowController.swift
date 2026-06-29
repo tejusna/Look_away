@@ -34,6 +34,10 @@ final class WidgetWindowController {
     private let eyeLook = EyeLookController()
 
     private let blobSize: CGFloat = 56
+    // Room around the pet so its drop shadow isn't clipped at the panel edge.
+    // Must match `shadowPadding` in WidgetView. Panel footprint uses `cellSize`.
+    private let shadowPadding: CGFloat = 6
+    private var cellSize: CGFloat { blobSize + shadowPadding * 2 }
     private let margin: CGFloat = 12
     private let bubbleExtent: CGFloat = 170
     private let announceDuration: TimeInterval = 10
@@ -59,7 +63,7 @@ final class WidgetWindowController {
         self.currentScreen = NSScreen.main ?? NSScreen.screens[0]
 
         panel = WidgetPanel(
-            contentRect: NSRect(x: 0, y: 0, width: blobSize, height: blobSize),
+            contentRect: NSRect(x: 0, y: 0, width: blobSize + shadowPadding * 2, height: blobSize + shadowPadding * 2),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
@@ -215,9 +219,9 @@ final class WidgetWindowController {
         let frame = panel.frame
         switch settings.widgetPosition.edge {
         case .right:
-            return NSPoint(x: frame.maxX - blobSize / 2, y: frame.midY)
+            return NSPoint(x: frame.maxX - cellSize / 2, y: frame.midY)
         case .left:
-            return NSPoint(x: frame.minX + blobSize / 2, y: frame.midY)
+            return NSPoint(x: frame.minX + cellSize / 2, y: frame.midY)
         }
     }
 
@@ -371,8 +375,8 @@ final class WidgetWindowController {
         let isAnnouncing: Bool
         if case .announcing = phase { isAnnouncing = true } else { isAnnouncing = false }
 
-        let width = isAnnouncing ? blobSize + 10 + bubbleExtent : blobSize
-        let size = NSSize(width: width, height: max(blobSize, 70))
+        let width = isAnnouncing ? cellSize + 10 + bubbleExtent : cellSize
+        let size = NSSize(width: width, height: cellSize)
         var origin: NSPoint
 
         switch position.edge {

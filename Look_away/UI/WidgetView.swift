@@ -14,7 +14,12 @@ struct WidgetView: View {
     var onDragEnded: () -> Void = {}
 
     private let blobSize: CGFloat = 56
+    // Room around the pet so its drop shadow isn't clipped at the panel edge.
+    // Must match `shadowPadding` in WidgetWindowController (panel footprint = blobSize + 2x).
+    private let shadowPadding: CGFloat = 6
     private let dismissThreshold: CGFloat = 40
+
+    private var cellSize: CGFloat { blobSize + shadowPadding * 2 }
 
     var body: some View {
         switch edge {
@@ -53,6 +58,9 @@ struct WidgetView: View {
             .frame(width: blobSize, height: blobSize)
             .overlay(EyesView(isAlert: isAnnouncing, lookController: lookController).offset(y: eyesYOffset))
             .shadow(color: .black.opacity(0.25), radius: 6, y: 2)
+            // Center the shadowed pet in a larger cell so the shadow has room and isn't
+            // clipped at the panel edge. Drag handle covers the whole cell.
+            .frame(width: cellSize, height: cellSize)
             .overlay(WindowDragHandle(onBegan: onDragBegan, onChanged: onDragChanged, onEnded: onDragEnded))
     }
 
