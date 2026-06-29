@@ -11,6 +11,8 @@ final class EyeLookController: ObservableObject {
 struct EyesView: View {
     /// Reminding state makes the eyes widen, look more alert, and track the cursor.
     var isAlert: Bool
+    /// Per-pet size factor for the eyes and the gap between them (1 = default).
+    var scale: CGFloat = 1
     @ObservedObject var lookController: EyeLookController
 
     @State private var isBlinking = false
@@ -23,7 +25,7 @@ struct EyesView: View {
     }
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 8 * scale) {
             eye
             eye
         }
@@ -35,11 +37,11 @@ struct EyesView: View {
         ZStack {
             Capsule()
                 .fill(Color.white)
-                .frame(width: 16, height: isBlinking ? 2 : (isAlert ? 22 : 18))
+                .frame(width: 16 * scale, height: (isBlinking ? 2 : (isAlert ? 22 : 18)) * scale)
 
             Circle()
                 .fill(Color.black)
-                .frame(width: 8, height: 8)
+                .frame(width: 8 * scale, height: 8 * scale)
                 .offset(pupilOffset)
                 .opacity(isBlinking ? 0 : 1)
                 .animation(.easeOut(duration: 0.12), value: pupilOffset)

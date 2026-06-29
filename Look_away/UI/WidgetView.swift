@@ -44,19 +44,19 @@ struct WidgetView: View {
         case .boxy:
             blobContent(shape: RoundedRectangle(cornerRadius: 14))
         case .flower:
-            blobContent(shape: FlowerShape())
+            blobContent(shape: FlowerShape(), eyesScale: 0.78)
         case .cat:
             blobContent(shape: CatShape(), eyesYOffset: 6)
         }
     }
 
-    private func blobContent(shape: some Shape, eyesYOffset: CGFloat = 0) -> some View {
+    private func blobContent(shape: some Shape, eyesYOffset: CGFloat = 0, eyesScale: CGFloat = 1) -> some View {
         shape
             .fill(
                 LinearGradient(colors: settings.widgetColor.gradientColors, startPoint: .topLeading, endPoint: .bottomTrailing)
             )
             .frame(width: blobSize, height: blobSize)
-            .overlay(EyesView(isAlert: isAnnouncing, lookController: lookController).offset(y: eyesYOffset))
+            .overlay(EyesView(isAlert: isAnnouncing, scale: eyesScale, lookController: lookController).offset(y: eyesYOffset))
             .shadow(color: .black.opacity(0.25), radius: 6, y: 2)
             // Center the shadowed pet in a larger cell so the shadow has room and isn't
             // clipped at the panel edge. Drag handle covers the whole cell.
